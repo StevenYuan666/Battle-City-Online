@@ -1,5 +1,8 @@
 import java.awt.image.BufferedImage;
+import java.awt.Image;
+import java.awt.image.*;
 import java.io.IOException;
+import java.awt.*;
 
 import javax.imageio.ImageIO;
 
@@ -14,20 +17,26 @@ public class ResourceMgr {
 	public static BufferedImage bulletU;
 	public static BufferedImage bulletR;
 	public static BufferedImage bulletD;	
+	//初始化爆炸图片数组
+	public static BufferedImage[] explosion = new BufferedImage[16];
 	
 	//当当前类被导入到内存的时候，静态模块自动执行
 	static {
 		try {
-			//用静态模块倒入坦克的图片
-			tankL = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankL.gif"));
-			tankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankU.gif"));
-			tankR = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankR.gif"));
-			tankD = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankD.gif"));
+			//用静态模块倒入坏坦克的图片
+			tankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/BadTank1.png"));
+			tankL = ImageUtil.rotateImage(tankU, -90);
+			tankR = ImageUtil.rotateImage(tankU, 90);
+			tankD = ImageUtil.rotateImage(tankU, 180);
 			//用静态模块倒入子弹的图片
-			bulletL = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletL.gif"));
-			bulletU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletU.gif"));
-			bulletR = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletR.gif"));
-			bulletD = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletD.gif"));
+			bulletU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletU.png"));
+			bulletL = ImageUtil.rotateImage(bulletU, -90);
+			bulletR = ImageUtil.rotateImage(bulletU, 90);
+			bulletD = ImageUtil.rotateImage(bulletU, 180);
+			//用静态模块倒入爆炸的图片
+			for(int i = 0; i < 16; i ++) {
+				explosion[i] = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/e" + (i+1) + ".gif"));
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

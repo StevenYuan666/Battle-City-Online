@@ -86,7 +86,7 @@ public class Bullet {
 		}
 	}
 	public void collideWith(Tank tank) {
-		//关闭友商
+		//关闭友伤
 		if(this.group == tank.getGroup()) return;
 		//使用rectangle作为辅助
 		//TODO：尝试不要每次都new一个rectangle出来

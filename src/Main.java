@@ -10,10 +10,11 @@ public class Main {
 		for(int i = 0; i < 5; i++) {
 			tf.tanks.add(new Tank(50 + i * 80, 200, Dir.DOWN, tf, Group.BAD));
 		}
+		new Thread(()->new Audio("audio/war1.wav").loop()).start();
 		
 		//使用一个死循环，让敌人坦克一直移动起来
 		while(true) {
-			Thread.sleep(50);
+			Thread.sleep(25);
 			tf.repaint();
 		}
 		

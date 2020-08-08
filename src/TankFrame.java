@@ -11,11 +11,12 @@ public class TankFrame extends Frame{
 	ArrayList<Bullet> bullets = new ArrayList<>();
 	//创建一个敌人坦克的容器
 	ArrayList<Tank> tanks = new ArrayList<>();
+	//创建一个装爆炸的容器
+	ArrayList<Explode> explodes = new ArrayList<>();
 	
 	//设置游戏画面的大小
-	static final int GAME_WIDTH = 800;
-	static final int GAME_HEIGHT = 600;
-	
+	static final int GAME_WIDTH = 1200;
+	static final int GAME_HEIGHT = 800;
 	
 	//构造器,这样可以通过在主函数中新建一个TankFrame的对象来实现新建窗口
 	public TankFrame(){
@@ -37,6 +38,7 @@ public class TankFrame extends Frame{
 			}
 		});
 	}
+	
 	
 	//解决坦克和子弹的闪烁问题，双缓冲
 	//游戏中常用的解决闪烁的方法
@@ -64,6 +66,7 @@ public class TankFrame extends Frame{
 		//看看子弹和坦克的数量
 		g.drawString("Number of Bullets " + this.bullets.size(),10, 60);
 		g.drawString("Number of Tanks " + this.tanks.size() , 10, 100);
+		g.drawString("Number of Explodes " + this.explodes.size() , 10, 140);
 		//让坦克自己给自己画出来
 		myTank.paint(g);
 		//让容器中的每个子弹都给自己画出来
@@ -75,13 +78,16 @@ public class TankFrame extends Frame{
 		for(int i = 0; i < tanks.size(); i ++) {
 			tanks.get(i).paint(g);
 		}
+		//让容器中的每个爆炸都给自己画出来
+		for(int i = 0; i < explodes.size(); i ++) {
+			explodes.get(i).paint(g);
+		}
 		//做每颗子弹和每辆坦克的碰撞检测//使用嵌套循环
 		for(int i = 0; i < bullets.size(); i ++) {
 			for(int j = 0; j < tanks.size(); j ++) {
 				bullets.get(i).collideWith(tanks.get(j));
 			}
 		}
-		
 	}
 	//编写内部类键盘监听器，来管理我们希望键盘监听器干的事情，从Key adapter继承
 	class MyKeyListener extends KeyAdapter{

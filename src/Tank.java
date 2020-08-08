@@ -1,7 +1,10 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
 
 public class Tank {
+	//设置随机变量
+	private Random random = new Random();
 	//设置坦克的组别，好的还是坏的
 	private Group group;
 	//讲窗口设置为Tank的属性，以便可以让Tank的发射的子弹画出来，目的是让Tank获得TankFrame的引用，从而访问TankFrame中的内容
@@ -30,8 +33,8 @@ public class Tank {
 		//设置坦克的速度
 		private final int SPEED = 5;
 		//坦克的大小
-		static final int WIDTH = ResourceMgr.tankD.getWidth();
-		static final int HEIGHT = ResourceMgr.tankD.getHeight();;
+		static final int WIDTH = ResourceMgr.tankU.getWidth();
+		static final int HEIGHT = ResourceMgr.tankU.getHeight();;
 		//设置坦克的存亡属性
 		private boolean living;
 		//调用方向
@@ -56,7 +59,7 @@ public class Tank {
 			this.x = x;
 			this.y = y;
 			this.dir = dir;
-			this.moving = false;
+			this.moving = true;
 			this.tf = tf;
 			this.living = true;
 			this.group = group;
@@ -110,6 +113,17 @@ public class Tank {
 			default:
 				break;
 			}
+			//随机发射子弹
+			if(this.group == Group.BAD && random.nextInt(100) > 95) {
+				this.fire();
+			}
+			if(this.group == Group.BAD && random.nextInt(100) > 95) {
+				randomDir();
+			}
+		}
+		//随机改变方向
+		private void randomDir() {
+			this.dir = Dir.values()[random.nextInt(4)];
 		}
 		public void fire() {
 			int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
@@ -117,6 +131,8 @@ public class Tank {
 			//每当开火的时候创建一个子弹，并且使子弹具有与坦克相同的方向和位置
 			//把创建出来的子弹装到容器当中
 			this.tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf, this.group));
+			//倒入声音文件
+			//new Audio("audio/tank_fire.wav").play();;
 		}
 		//group的getter和setter
 		public Group getGroup() {
@@ -127,6 +143,7 @@ public class Tank {
 		}
 		public void die() {
 			this.living = false;
+			tf.explodes.add(new Explode(this.x, this.y, this.tf));
 		}
 		
 		
