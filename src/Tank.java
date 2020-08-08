@@ -61,7 +61,7 @@ public class Tank {
 		public void paint(Graphics g) {
 			//如果坦克死了的话，就不画了
 			if(!this.living) {
-				return;
+				this.tf.tanks.remove(this);
 			}
 			//坐标左上角为（0，0），向右为x轴，向下为y轴
 			//将坦克的初始坐标改为变量，以便让坦克动起来

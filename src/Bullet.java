@@ -31,7 +31,7 @@ public class Bullet {
 	}
 	public void paint(Graphics g) {
 		if(!this.living) {
-			return;
+			this.tf.bullets.remove(this);
 		}
 		//让子弹可以自己把自己画出来
 		switch (this.dir) {

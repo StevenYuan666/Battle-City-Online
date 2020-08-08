@@ -61,6 +61,9 @@ public class TankFrame extends Frame{
 	//paint方法，每当重新画画布的时候，就会被自动调用
 	//Graphics相当于是画笔
 	public void paint(Graphics g){
+		//看看子弹和坦克的数量
+		g.drawString("Number of Bullets " + this.bullets.size(),10, 60);
+		g.drawString("Number of Tanks " + this.tanks.size() , 10, 100);
 		//让坦克自己给自己画出来
 		myTank.paint(g);
 		//让容器中的每个子弹都给自己画出来
