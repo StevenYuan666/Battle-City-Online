@@ -6,9 +6,11 @@ import java.util.ArrayList;
 
 public class TankFrame extends Frame{
 	//创建一个新的我的坦克
-	Tank myTank = new Tank(ResourceMgr.tankD.getWidth(), ResourceMgr.tankD.getHeight(), Dir.DOWN, this);
+	Tank myTank = new Tank(200, 400, Dir.DOWN, this);
 	//创建一个装子弹的容器
 	ArrayList<Bullet> bullets = new ArrayList<>();
+	//创建一个敌人坦克的容器
+	ArrayList<Tank> tanks = new ArrayList<>();
 	
 	//设置游戏画面的大小
 	static final int GAME_WIDTH = 800;
@@ -65,6 +67,10 @@ public class TankFrame extends Frame{
 		//这里不要用for each方法
 		for(int i = 0; i < bullets.size(); i ++) {
 			bullets.get(i).paint(g);
+		}
+		//让容器中的每个敌人都给自己画出来
+		for(int i = 0; i < tanks.size(); i ++) {
+			tanks.get(i).paint(g);
 		}
 		
 	}
