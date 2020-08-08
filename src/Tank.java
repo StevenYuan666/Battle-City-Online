@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Tank {
+	//设置坦克的组别，好的还是坏的
+	private Group group;
 	//讲窗口设置为Tank的属性，以便可以让Tank的发射的子弹画出来，目的是让Tank获得TankFrame的引用，从而访问TankFrame中的内容
 	private TankFrame tf;
 	//设定坦克坐标的属性
@@ -49,7 +51,7 @@ public class Tank {
 			this.moving = moving;
 		}
 		//构造器
-		public Tank(int x, int y, Dir dir, TankFrame tf) {
+		public Tank(int x, int y, Dir dir, TankFrame tf, Group group) {
 			super();
 			this.x = x;
 			this.y = y;
@@ -57,6 +59,7 @@ public class Tank {
 			this.moving = false;
 			this.tf = tf;
 			this.living = true;
+			this.group = group;
 		}
 		public void paint(Graphics g) {
 			//如果坦克死了的话，就不画了
@@ -113,7 +116,14 @@ public class Tank {
 			int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
 			//每当开火的时候创建一个子弹，并且使子弹具有与坦克相同的方向和位置
 			//把创建出来的子弹装到容器当中
-			this.tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf));
+			this.tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf, this.group));
+		}
+		//group的getter和setter
+		public Group getGroup() {
+			return group;
+		}
+		public void setGroup(Group group) {
+			this.group = group;
 		}
 		public void die() {
 			this.living = false;

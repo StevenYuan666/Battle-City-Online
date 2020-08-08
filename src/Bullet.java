@@ -3,7 +3,15 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Bullet {
-	
+	//设置子弹的好坏，自己方的子弹是打不死己方的坦克的
+	private Group group;
+	//group的getter和setter
+	public Group getGroup() {
+		return group;
+	}
+	public void setGroup(Group group) {
+		this.group = group;
+	}
 	//子弹的速度属性
 	private static final int SPEED = 10;
 	//子弹的坐标属性
@@ -21,13 +29,14 @@ public class Bullet {
 	
 	//构造器
 	//也持有TankFrame的引用
-	public Bullet(int x, int y, Dir dir, TankFrame tf) {
+	public Bullet(int x, int y, Dir dir, TankFrame tf, Group group) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
 		this.living = true;
 		this.tf = tf;
+		this.group = group;
 	}
 	public void paint(Graphics g) {
 		if(!this.living) {
@@ -77,7 +86,10 @@ public class Bullet {
 		}
 	}
 	public void collideWith(Tank tank) {
+		//关闭友商
+		if(this.group == tank.getGroup()) return;
 		//使用rectangle作为辅助
+		//TODO：尝试不要每次都new一个rectangle出来
 		Rectangle b = new Rectangle(this.x, this.y, Bullet.WIDTH, Bullet.HEIGHT);
 		Rectangle t = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
 		if(b.intersects(t)) {

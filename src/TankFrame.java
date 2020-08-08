@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class TankFrame extends Frame{
 	//创建一个新的我的坦克
-	Tank myTank = new Tank(200, 400, Dir.DOWN, this);
+	Tank myTank = new Tank(200, 400, Dir.DOWN, this, Group.GOOD);
 	//创建一个装子弹的容器
 	ArrayList<Bullet> bullets = new ArrayList<>();
 	//创建一个敌人坦克的容器
