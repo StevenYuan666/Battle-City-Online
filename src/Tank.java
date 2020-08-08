@@ -6,6 +6,20 @@ public class Tank {
 	private TankFrame tf;
 	//设定坦克坐标的属性
 		private int x;
+		//坐标x的getter和setter
+		public int getX() {
+			return x;
+		}
+		public void setX(int x) {
+			this.x = x;
+		}
+		//坐标y的getter和setter
+		public int getY() {
+			return y;
+		}
+		public void setY(int y) {
+			this.y = y;
+		}
 		private int y;
 		//设置坦克初始方向的属性
 		Dir dir ;
@@ -16,6 +30,8 @@ public class Tank {
 		//坦克的大小
 		static final int WIDTH = ResourceMgr.tankD.getWidth();
 		static final int HEIGHT = ResourceMgr.tankD.getHeight();;
+		//设置坦克的存亡属性
+		private boolean living;
 		//调用方向
 		public Dir getDir() {
 			return dir;
@@ -40,8 +56,13 @@ public class Tank {
 			this.dir = dir;
 			this.moving = false;
 			this.tf = tf;
+			this.living = true;
 		}
 		public void paint(Graphics g) {
+			//如果坦克死了的话，就不画了
+			if(!this.living) {
+				return;
+			}
 			//坐标左上角为（0，0），向右为x轴，向下为y轴
 			//将坦克的初始坐标改为变量，以便让坦克动起来
 			//将坦克图片画进来
@@ -93,6 +114,9 @@ public class Tank {
 			//每当开火的时候创建一个子弹，并且使子弹具有与坦克相同的方向和位置
 			//把创建出来的子弹装到容器当中
 			this.tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf));
+		}
+		public void die() {
+			this.living = false;
 		}
 		
 		

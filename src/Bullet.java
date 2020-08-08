@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Bullet {
 	
@@ -14,7 +15,7 @@ public class Bullet {
 	static final int WIDTH = ResourceMgr.bulletD.getWidth();
 	static final int HEIGHT = ResourceMgr.bulletD.getHeight();;
 	//判断子弹是否飞出了界面
-	private boolean live;
+	private boolean living;
 	//持有TankFrame的引用
 	private TankFrame tf;
 	
@@ -25,10 +26,13 @@ public class Bullet {
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
-		this.live = true;
+		this.living = true;
 		this.tf = tf;
 	}
 	public void paint(Graphics g) {
+		if(!this.living) {
+			return;
+		}
 		//让子弹可以自己把自己画出来
 		switch (this.dir) {
 		case LEFT:
@@ -69,8 +73,20 @@ public class Bullet {
 		}
 		//修改子弹的状态
 		if(x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
-			this.live = false;
+			this.living = false;
 		}
+	}
+	public void collideWith(Tank tank) {
+		//使用rectangle作为辅助
+		Rectangle b = new Rectangle(this.x, this.y, Bullet.WIDTH, Bullet.HEIGHT);
+		Rectangle t = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
+		if(b.intersects(t)) {
+			tank.die();
+			this.die();
+		}
+	}
+	private void die() {
+		this.living = false;
 	}
 	
 }

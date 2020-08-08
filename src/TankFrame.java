@@ -72,6 +72,12 @@ public class TankFrame extends Frame{
 		for(int i = 0; i < tanks.size(); i ++) {
 			tanks.get(i).paint(g);
 		}
+		//做每颗子弹和每辆坦克的碰撞检测//使用嵌套循环
+		for(int i = 0; i < bullets.size(); i ++) {
+			for(int j = 0; j < tanks.size(); j ++) {
+				bullets.get(i).collideWith(tanks.get(j));
+			}
+		}
 		
 	}
 	//编写内部类键盘监听器，来管理我们希望键盘监听器干的事情，从Key adapter继承
