@@ -11,7 +11,7 @@ public class Main {
 			tf.tanks.add(new Tank(50 + i * 80, 200, Dir.DOWN, tf, Group.BAD));
 		}
 		//TODO:记得把声音加上
-		//new Thread(()->new Audio("audio/war1.wav").loop()).start();
+		new Thread(()->new Audio("audio/war1.wav").loop()).start();
 		
 		//使用一个死循环，让敌人坦克一直移动起来
 		while(true) {

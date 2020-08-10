@@ -122,6 +122,8 @@ public class TankFrame extends Frame{
 			}
 			//改变坦克的方向
 			setMainTankDir();
+			//让主战坦克走的时候有声音
+			//new Thread(()->new Audio("audio/tank_move.wav").play()).start();
 		}
 		//松开任意一个建的时候会自动调用
 		@Override
@@ -151,8 +153,6 @@ public class TankFrame extends Frame{
 			}
 			//改变坦克的方向
 			setMainTankDir();
-			//让主战坦克走的时候有声音
-			//new Thread(()->new Audio("audio/tank_move.wav").play()).start();
 		}
 		//设置主战坦克方向的方法
 		private void setMainTankDir() {

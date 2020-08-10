@@ -120,6 +120,23 @@ public class Tank {
 			if(this.group == Group.BAD && random.nextInt(100) > 95) {
 				randomDir();
 			}
+			//坦克的边界检测
+			boundsCheck();
+		}
+		private void boundsCheck() {
+			if(x < 0) {
+				this.x = 0;
+			}
+			//上面有菜单栏的位置
+			if(y < 30) {
+				this.y = 30;
+			}
+			if(x > TankFrame.GAME_WIDTH - Tank.WIDTH) {
+				this.x = TankFrame.GAME_WIDTH - Tank.WIDTH;
+			}
+			if(y > TankFrame.GAME_HEIGHT - Tank.HEIGHT) {
+				this.y = TankFrame.GAME_HEIGHT - Tank.HEIGHT;
+			}
 		}
 		//随机改变方向
 		private void randomDir() {
