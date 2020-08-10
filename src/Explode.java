@@ -22,7 +22,7 @@ public class Explode {
 		this.y = y;
 		this.tf = tf;
 		//倒入声音文件
-		new Audio("audio/explode.wav").play();;
+		new Thread(()->new Audio("audio/explode.wav").play()).start();
 	}
 	public void paint(Graphics g) {
 		//一次画出爆炸数组中的一张图片
@@ -31,6 +31,7 @@ public class Explode {
 		step ++;
 		//设置停止画的条件
 		if(step >= ResourceMgr.explosion.length) {
+			step = 0;
 			this.tf.explodes.remove(this);
 		}
 	}

@@ -29,12 +29,12 @@ public class Tank {
 		//设置坦克初始方向的属性
 		Dir dir ;
 		//设置坦克是否为静止状态的属性
-		private boolean moving;
+		private boolean moving = true;
 		//设置坦克的速度
-		private final int SPEED = 5;
+		private final int SPEED = 2;
 		//坦克的大小
-		static final int WIDTH = ResourceMgr.tankU.getWidth();
-		static final int HEIGHT = ResourceMgr.tankU.getHeight();;
+		static final int WIDTH = ResourceMgr.badTankU.getWidth();
+		static final int HEIGHT = ResourceMgr.badTankU.getHeight();;
 		//设置坦克的存亡属性
 		private boolean living;
 		//调用方向
@@ -59,7 +59,6 @@ public class Tank {
 			this.x = x;
 			this.y = y;
 			this.dir = dir;
-			this.moving = true;
 			this.tf = tf;
 			this.living = true;
 			this.group = group;
@@ -72,18 +71,19 @@ public class Tank {
 			//坐标左上角为（0，0），向右为x轴，向下为y轴
 			//将坦克的初始坐标改为变量，以便让坦克动起来
 			//将坦克图片画进来
+			//要区分好坦克和坏坦克的图片
 			switch (this.dir){
 				case LEFT:
-					g.drawImage(ResourceMgr.tankL, x, y, null);
+					g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
 					break;
 				case UP:
-					g.drawImage(ResourceMgr.tankU, x, y, null);
+					g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankU :ResourceMgr.badTankU, x, y, null);
 					break;
 				case RIGHT:
-					g.drawImage(ResourceMgr.tankR, x, y, null);
+					g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankR :ResourceMgr.badTankR, x, y, null);
 					break;
 				case DOWN:
-					g.drawImage(ResourceMgr.tankD, x, y, null);
+					g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankD :ResourceMgr.badTankD, x, y, null);
 					break;
 				default:
 					break;
@@ -132,7 +132,7 @@ public class Tank {
 			//把创建出来的子弹装到容器当中
 			this.tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf, this.group));
 			//倒入声音文件
-			//new Audio("audio/tank_fire.wav").play();;
+			if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
 		}
 		//group的getter和setter
 		public Group getGroup() {
@@ -143,7 +143,6 @@ public class Tank {
 		}
 		public void die() {
 			this.living = false;
-			tf.explodes.add(new Explode(this.x, this.y, this.tf));
 		}
 		
 		

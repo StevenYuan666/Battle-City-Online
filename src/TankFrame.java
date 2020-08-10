@@ -15,8 +15,8 @@ public class TankFrame extends Frame{
 	ArrayList<Explode> explodes = new ArrayList<>();
 	
 	//设置游戏画面的大小
-	static final int GAME_WIDTH = 1200;
-	static final int GAME_HEIGHT = 800;
+	static final int GAME_WIDTH = 1080;
+	static final int GAME_HEIGHT = 960;
 	
 	//构造器,这样可以通过在主函数中新建一个TankFrame的对象来实现新建窗口
 	public TankFrame(){
@@ -151,6 +151,8 @@ public class TankFrame extends Frame{
 			}
 			//改变坦克的方向
 			setMainTankDir();
+			//让主战坦克走的时候有声音
+			//new Thread(()->new Audio("audio/tank_move.wav").play()).start();
 		}
 		//设置主战坦克方向的方法
 		private void setMainTankDir() {

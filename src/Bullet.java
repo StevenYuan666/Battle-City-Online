@@ -13,7 +13,7 @@ public class Bullet {
 		this.group = group;
 	}
 	//子弹的速度属性
-	private static final int SPEED = 10;
+	private static final int SPEED = 6;
 	//子弹的坐标属性
 	private int x;
 	private int y;
@@ -95,6 +95,10 @@ public class Bullet {
 		if(b.intersects(t)) {
 			tank.die();
 			this.die();
+			//让爆炸在坦克的中心位置显示
+			int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
+			int eY = tank.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
+			tf.explodes.add(new Explode(eX, eY, this.tf));
 		}
 	}
 	private void die() {

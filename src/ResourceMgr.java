@@ -7,11 +7,16 @@ import java.awt.*;
 import javax.imageio.ImageIO;
 
 public class ResourceMgr {
-	//初始坦克四个方向的图片
-	public static BufferedImage tankL;
-	public static BufferedImage tankU;
-	public static BufferedImage tankR;
-	public static BufferedImage tankD;
+	//初始坏坦克四个方向的图片
+	public static BufferedImage badTankL;
+	public static BufferedImage badTankU;
+	public static BufferedImage badTankR;
+	public static BufferedImage badTankD;
+	//初始好坦克四个方向的图片
+	public static BufferedImage goodTankL;
+	public static BufferedImage goodTankU;
+	public static BufferedImage goodTankR;
+	public static BufferedImage goodTankD;
 	//初始子弹四个方向的图片
 	public static BufferedImage bulletL;
 	public static BufferedImage bulletU;
@@ -24,10 +29,15 @@ public class ResourceMgr {
 	static {
 		try {
 			//用静态模块倒入坏坦克的图片
-			tankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/BadTank1.png"));
-			tankL = ImageUtil.rotateImage(tankU, -90);
-			tankR = ImageUtil.rotateImage(tankU, 90);
-			tankD = ImageUtil.rotateImage(tankU, 180);
+			badTankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/BadTank1.png"));
+			badTankL = ImageUtil.rotateImage(badTankU, -90);
+			badTankR = ImageUtil.rotateImage(badTankU, 90);
+			badTankD = ImageUtil.rotateImage(badTankU, 180);
+			//用静态模块倒入好坦克的图片
+			goodTankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/GoodTank1.png"));
+			goodTankL = ImageUtil.rotateImage(goodTankU, -90);
+			goodTankR = ImageUtil.rotateImage(goodTankU, 90);
+			goodTankD = ImageUtil.rotateImage(goodTankU, 180);
 			//用静态模块倒入子弹的图片
 			bulletU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletU.png"));
 			bulletL = ImageUtil.rotateImage(bulletU, -90);
