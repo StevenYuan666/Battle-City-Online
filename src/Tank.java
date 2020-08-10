@@ -1,8 +1,11 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.Random;
 
 public class Tank {
+	//设置坦克的rectangle
+	Rectangle rect = new Rectangle();
 	//设置随机变量
 	private Random random = new Random();
 	//设置坦克的组别，好的还是坏的
@@ -62,6 +65,10 @@ public class Tank {
 			this.tf = tf;
 			this.living = true;
 			this.group = group;
+			rect.x = this.x;
+			rect.y = this.y;
+			rect.width = Tank.WIDTH;
+			rect.height = Tank.HEIGHT;
 		}
 		public void paint(Graphics g) {
 			//如果坦克死了的话，就不画了
@@ -122,6 +129,9 @@ public class Tank {
 			}
 			//坦克的边界检测
 			boundsCheck();
+			//更新rectangle的值
+			rect.x = this.x;
+			rect.y = this.y;
 		}
 		private void boundsCheck() {
 			if(x < 0) {

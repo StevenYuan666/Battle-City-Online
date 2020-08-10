@@ -26,6 +26,8 @@ public class Bullet {
 	private boolean living;
 	//持有TankFrame的引用
 	private TankFrame tf;
+	//解决子弹碰撞检测每次都得创建新Rectangle的问题
+	Rectangle rect = new Rectangle();
 	
 	//构造器
 	//也持有TankFrame的引用
@@ -37,6 +39,10 @@ public class Bullet {
 		this.living = true;
 		this.tf = tf;
 		this.group = group;
+		rect.x = this.x;
+		rect.y = this.y;
+		rect.width = Bullet.WIDTH;
+		rect.height = Bullet.HEIGHT;
 	}
 	public void paint(Graphics g) {
 		if(!this.living) {
@@ -84,15 +90,15 @@ public class Bullet {
 		if(x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
 			this.living = false;
 		}
+		//更新rectangle的值
+		rect.x = this.x;
+		rect.y = this.y;
 	}
 	public void collideWith(Tank tank) {
 		//关闭友伤
 		if(this.group == tank.getGroup()) return;
 		//使用rectangle作为辅助
-		//TODO：尝试不要每次都new一个rectangle出来
-		Rectangle b = new Rectangle(this.x, this.y, Bullet.WIDTH, Bullet.HEIGHT);
-		Rectangle t = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
-		if(b.intersects(t)) {
+		if(this.rect.intersects(tank.rect)) {
 			tank.die();
 			this.die();
 			//让爆炸在坦克的中心位置显示

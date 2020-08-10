@@ -7,7 +7,8 @@ public class Main {
 		TankFrame tf = new TankFrame();
 		
 		//初始化地方坦克的容器
-		for(int i = 0; i < 5; i++) {
+		int initialTankAccount = (int) PropertyMgr.get("initialTankAccount");
+		for(int i = 0; i < initialTankAccount; i++) {
 			tf.tanks.add(new Tank(50 + i * 80, 200, Dir.DOWN, tf, Group.BAD));
 		}
 		//TODO:记得把声音加上
