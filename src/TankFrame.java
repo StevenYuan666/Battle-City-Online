@@ -15,8 +15,8 @@ public class TankFrame extends Frame{
 	ArrayList<Explode> explodes = new ArrayList<>();
 	
 	//设置游戏画面的大小
-	static final int GAME_WIDTH = 1200;
-	static final int GAME_HEIGHT = 800;
+	static final int GAME_WIDTH = Integer.parseInt((String) PropertyMgr.get("gameWidth"));
+	static final int GAME_HEIGHT = Integer.parseInt((String) PropertyMgr.get("gameHeight"));;
 	
 	//构造器,这样可以通过在主函数中新建一个TankFrame的对象来实现新建窗口
 	public TankFrame(){

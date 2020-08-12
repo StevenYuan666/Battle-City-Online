@@ -13,7 +13,7 @@ public class Bullet {
 		this.group = group;
 	}
 	//子弹的速度属性
-	private static final int SPEED = 6;
+	private static final int SPEED = Integer.parseInt((String) PropertyMgr.get("bulletSpeed"));;
 	//子弹的坐标属性
 	private int x;
 	private int y;
@@ -43,6 +43,8 @@ public class Bullet {
 		rect.y = this.y;
 		rect.width = Bullet.WIDTH;
 		rect.height = Bullet.HEIGHT;
+		//创建完之后直接装进子弹容器里
+		tf.bullets.add(this);
 	}
 	public void paint(Graphics g) {
 		if(!this.living) {

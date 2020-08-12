@@ -3,3 +3,10 @@
 #警号开头是注释
 #把可能会改的东西都写在配置文件里，改的时候好改
 initialTankAccount=10
+tankSpeed=2
+bulletSpeed=6
+gameWidth=1200
+gameHeight=800
+#fireStrategy
+goodFS=FourDirFireStrategy
+badFS=DefaultFireStrategy

@@ -4,16 +4,19 @@ import java.awt.Rectangle;
 import java.util.Random;
 
 public class Tank {
+	//添加成员变量FireStrategy
+	FireStrategy fs;
 	//设置坦克的rectangle
 	Rectangle rect = new Rectangle();
 	//设置随机变量
 	private Random random = new Random();
 	//设置坦克的组别，好的还是坏的
-	private Group group;
+	Group group;
 	//讲窗口设置为Tank的属性，以便可以让Tank的发射的子弹画出来，目的是让Tank获得TankFrame的引用，从而访问TankFrame中的内容
-	private TankFrame tf;
+	TankFrame tf;
 	//设定坦克坐标的属性
-		private int x;
+		int x;
+		int y;
 		//坐标x的getter和setter
 		public int getX() {
 			return x;
@@ -28,13 +31,12 @@ public class Tank {
 		public void setY(int y) {
 			this.y = y;
 		}
-		private int y;
 		//设置坦克初始方向的属性
 		Dir dir ;
 		//设置坦克是否为静止状态的属性
 		private boolean moving = true;
 		//设置坦克的速度
-		private final int SPEED = 2;
+		private final int SPEED = Integer.parseInt((String) PropertyMgr.get("tankSpeed"));;
 		//坦克的大小
 		static final int WIDTH = ResourceMgr.badTankU.getWidth();
 		static final int HEIGHT = ResourceMgr.badTankU.getHeight();;
@@ -69,6 +71,25 @@ public class Tank {
 			rect.y = this.y;
 			rect.width = Tank.WIDTH;
 			rect.height = Tank.HEIGHT;
+			//区分敌我的开火方式
+			if(this.group == Group.GOOD) {
+				String goodFSName = (String) PropertyMgr.get("goodFS");
+				//把这个名字代表的类load到内存
+				try {
+					fs = (FireStrategy) Class.forName(goodFSName).newInstance();
+				} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+			else {
+				String badFSName = (String) PropertyMgr.get("badFS");
+				try {
+					fs = (FireStrategy) Class.forName(badFSName).newInstance();
+				} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+			
 		}
 		public void paint(Graphics g) {
 			//如果坦克死了的话，就不画了
@@ -152,14 +173,11 @@ public class Tank {
 		private void randomDir() {
 			this.dir = Dir.values()[random.nextInt(4)];
 		}
+		//每次调用的时候传参数就要new一个新的object，这样会浪费内存空间，所以最好把DefaultFireStrategy设计成单例
+		//或者设计成成员变量，作为这个类的一个属性
+		//这里采用成员变量的设计方法
 		public void fire() {
-			int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
-			int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
-			//每当开火的时候创建一个子弹，并且使子弹具有与坦克相同的方向和位置
-			//把创建出来的子弹装到容器当中
-			this.tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf, this.group));
-			//倒入声音文件
-			if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
+			fs.fire(this);
 		}
 		//group的getter和setter
 		public Group getGroup() {
